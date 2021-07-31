@@ -1,9 +1,10 @@
 const canvas = document.querySelector(".canvas");
 const ctx = canvas.getContext('2d');
 const colors = document.querySelectorAll('.controls__color');
+const range = document.querySelector('.controls__range .range');
 
 ctx.strokeStyle = '#2c2c2c';
-ctx.lineWidth = 2.5;
+ctx.lineWidth = 5;
 
 let painting = false;
 
@@ -38,6 +39,11 @@ function handleColorClick(event) {
     ctx.strokeStyle = color;
 }
 
+function handleRangeChange(event) {
+    const brushSize = event.target.value;
+    ctx.lineWidth = brushSize;
+}
+
 function init() {
     if(canvas) {
         canvas.addEventListener("mousemove", handleMouseMove);
@@ -45,8 +51,12 @@ function init() {
         document.addEventListener("mouseup", stopPainting);
         // canvas.addEventListener("mouseleave", stopPainting);
         canvas.addEventListener("mouseenter", handleMouseEnter);
-        
-        Array.from(colors).forEach(color => color.addEventListener("click", handleColorClick));
+    }
+
+    Array.from(colors).forEach(color => color.addEventListener("click", handleColorClick));
+
+    if(range) {
+        range.addEventListener("input", handleRangeChange);
     }
 }
 
